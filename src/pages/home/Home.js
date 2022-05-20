@@ -1,18 +1,18 @@
 import axios from "axios";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import "./Home.css";
 import RecipeCardComp from "./RecipeCardComp";
+import loadingGif from "../../asset/loading.gif";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 const appId = process.env.REACT_APP_APP_ID;
 
 const Home = () => {
-  const [question, setQuestion] = useState("");
-  const [mealType, setMealType] = useState("");
+  const [question, setQuestion] = useState("a");
+  const [mealType, setMealType] = useState("dinner");
   const [cards, setCards] = useState([]);
-  
+  const [loading, setLoading] = useState();
 
   const questionHandle = (e) => {
     setQuestion(e.target.value);
@@ -28,20 +28,24 @@ const Home = () => {
     setMealType(e.target.value);
   };
 
-  
-
-  const recipeSearch = () => {
-    axios
+  const recipeSearch = async () => {
+    setLoading(true);
+    await axios
       .get(
         `https://api.edamam.com/search?q=${question}&app_id=${appId}&app_key=${apiKey}&mealType=${mealType}`
       )
       .then((res) => {
-        
-        // console.log(res.data.hits[0].recipe.label);
         setCards(res.data?.hits);
         // console.log(cards);
+      })
+      .catch((err) => {
+        setCards(err.name);
       });
+    setLoading(false);
   };
+  useEffect(() => {
+    recipeSearch();
+  }, []);
 
   return (
     <div>
@@ -50,19 +54,21 @@ const Home = () => {
         handleSubmit={handleSubmit}
         mealTime={mealTime}
       />
-      <div className="card-container">
-        {
-          cards.map((card, index) => {
-            return (
-              <RecipeCardComp
-                key={index}
-                card={card?.recipe}
-              />
-            )
-          })
-        }
-      </div>
-            
+      {loading ? (
+        <img src={loadingGif} alt="loading" />
+      ) : (
+        <div className="card-container">
+          {cards.length === 0 ? (
+            <p>Please enter a meal</p>
+          ) : cards === "AxiosError" ? (
+            <h2>Your request is not found in this category</h2>
+          ) : (
+            cards.map((card, index) => {
+              return <RecipeCardComp key={index} card={card?.recipe} />;
+            })
+          )}
+        </div>
+      )}
     </div>
   );
 };
