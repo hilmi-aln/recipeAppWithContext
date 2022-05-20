@@ -8,7 +8,7 @@ const LoginContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/");
+    navigate("/home");
     setLogin(true);
     // console.log(login);
   };

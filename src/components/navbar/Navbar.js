@@ -9,10 +9,12 @@ const Navbar = () => {
     <div className="navbar">
       <Link to="/">{"<Hilmi/>Recipe"}</Link>
       <div className="navbar-right">
-        <a href="">About</a>
-        <a href="">Github</a>
+        <Link to="/about">About</Link>
+        <Link to="/github">Github</Link>
         {/* <a href="">Logout</a> */}
-        <Link to="/login" onClick={navbarChange}>{login ? "Logout" : "Login"}</Link>
+        <Link to="/" onClick={navbarChange}>
+          {login ? "Logout" : "Login"}
+        </Link>
       </div>
     </div>
   );
