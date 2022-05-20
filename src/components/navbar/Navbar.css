@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  /* width: 70vw; */
+  font-family: "Girassol", cursive;
+  align-items: center;
+  background: #e1f1dd;
+  padding: 0 2rem;
+  height: 75px;
+  font-size: 2rem;
+}
+.navbar-right {
+  display: flex;
+  justify-content: space-around;
+  width: 25vw;
+}
