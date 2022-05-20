@@ -10,10 +10,15 @@ const LoginContextProvider = ({ children }) => {
   const handleClick = () => {
     navigate("/");
     setLogin(true);
+    // console.log(login);
   };
+  const navbarChange = () => {
+    setLogin(false);
+    // console.log(login);
+  }
 
   return (
-    <LoginContext.Provider value={{ login, handleClick }}>
+    <LoginContext.Provider value={{ login, handleClick,navbarChange }}>
       {children}
     </LoginContext.Provider>
   );

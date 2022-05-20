@@ -4,7 +4,7 @@ import { LoginContext } from "../../context/LoginContext";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { login } = useContext(LoginContext);
+  const { login, navbarChange } = useContext(LoginContext);
   return (
     <div className="navbar">
       <Link to="/">{"<Hilmi/>Recipe"}</Link>
@@ -12,7 +12,7 @@ const Navbar = () => {
         <a href="">About</a>
         <a href="">Github</a>
         {/* <a href="">Logout</a> */}
-        <Link to="/login" >{login ? "Logout" : "Login"}</Link>
+        <Link to="/login" onClick={navbarChange}>{login ? "Logout" : "Login"}</Link>
       </div>
     </div>
   );
